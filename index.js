@@ -2,8 +2,10 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const port = 8000
-let nextId = 5
+
 app.use(bodyParser.json())
+
+let nextId = 5
 let users = [
   {
     id: 1,
@@ -61,13 +63,13 @@ app.delete('/users', (req, res) => {
 })
 
 app.delete('/users/id:', (req, res) => {
-  const id = number(req.params.id)
+  const id = Number(req.params.id)
   users = users.filter(user => user.id !== id)
   res.send({ message: 'one user has been removed', id: id })
 })
 
 app.put('/users/id:', (req, res) => {
-  const id = number(req.params.id)
+  const id = Number(req.params.id)
   const newName = req.body.name
 
   const newUsers = users.map(user => {
@@ -78,6 +80,8 @@ app.put('/users/id:', (req, res) => {
       return user
     }
   })
+
+  users = newUsers
 
   res.send({
     message: 'one user has been updated',
